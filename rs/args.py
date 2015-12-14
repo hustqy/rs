@@ -20,8 +20,10 @@ class Args:
         parser.add_argument("-f", "--filename", metavar='<filename>', type=str, help="please specify the data file")
         parser.add_argument("-m", "--method", metavar='<method>', type=int, choices=xrange(0,3),help="""please specify method to recommend:
 
-0 for tfidf;1 for user2user;2 for term2term """)
+0 for user2user;1 for term2term;2 for others""")
+        parser.add_argument("-u", "--userid", metavar='<userid>', type=int, help="please specify the user to recommend")
         self.__args = parser.parse_args(arguments)
+
 
 
     def get_args(self):

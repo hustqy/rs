@@ -1,9 +1,7 @@
 
 from args import Args
 
-from news import News
-
-from tfidf import Tfidf
+from docs import Documents
 
 
 def main():
@@ -11,11 +9,16 @@ def main():
     args = Args().get_args()
     path = args.filename
     type = args.method
+    user = args.userid
 
-    news = News(path)
+    news = Documents(path)
+    matrix = news.parse()
+
+    for item in matrix:
+        if item.userid == user:
+            print item.tags
 
     if type == 0:
-        Tfidf(news)
-
+        pass
     if type == 1:
         pass
