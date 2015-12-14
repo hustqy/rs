@@ -25,7 +25,7 @@ for example:version.py -f /Users/qiaoyang/PycharmProjects/data.txt -m 0 -u 52187
 使用新闻文件data.txt，使用user2user模型，给出用户5218791的推荐新闻。<br>
 
 ##系统模块组成 <br>
-  * Core.py 总控模块 调用docs模块处理数据获取
+  * Core.py 总控模块 调用docs模块处理新闻数据，然后再使用user，item等模型实现推荐。
   * docs.py 数据处理模块
     * doc.py  处理新闻数据返回一系列News组成的数组
     * new.py  News类包含userid, newsid, scan_time, title, tags（提取的关键词）等信息
