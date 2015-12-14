@@ -30,5 +30,5 @@ for example:version.py -f /Users/qiaoyang/PycharmProjects/data.txt -m 0 -u 52187
     * doc.py  处理新闻数据返回一系列News组成的数组
     * new.py  News类包含userid, newsid, scan_time, title, tags（提取的关键词）等信息
     * tfidf Tfidf类 提取文档的关键词  
-      * 当前使用的是中文分词工具jieba，还可以提取关键词。 https://github.com/fxsjy/jieba
+      * 当前使用的是中文分词工具jieba，还可以提取关键词中，当前系统要求按照此工具。 https://github.com/fxsjy/jieba
   * usermodel 拟实现user2user模型
