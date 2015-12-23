@@ -14,16 +14,20 @@ class Core:
 
 
     def recommend(self):
-        news = Documents(self.path)
-        matrix = news.parse()
-
-        for item in matrix:
-            if item.userid == self.user:
-                print item.tags
+        news = Documents(self.path, is_tfidf=False)
+        news.parse()
+        m = news.get_user_item_matrix()
 
         if self.type == 0:
-            pass
+            UserModel(m)
+            self.print_matrix(m)
         if self.type == 1:
             pass
         if self.type == 2:
             pass
+
+    def print_matrix(self,m):
+
+        for (user,item) in m.items():
+            print user
+            print item.keys()

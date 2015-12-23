@@ -3,7 +3,7 @@
 class News:
 
     def __init__(self,userid, newsid, scan_time, title, tags=[], create_time=None):
-        self.userid = int(userid)
+        self.userid = userid
         self.newsid = newsid
         self.title = title
         self.tags = tags
