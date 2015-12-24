@@ -21,4 +21,6 @@ class News:
     def get_newsid(self):
         return self.newsid
     def get_title(self):
-        return title
+        return self.title
+    def get_create_time(self):
+        return self.create_time
