@@ -20,3 +20,5 @@ class News:
         return self.userid
     def get_newsid(self):
         return self.newsid
+    def get_title(self):
+        return title
