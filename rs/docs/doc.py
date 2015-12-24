@@ -14,10 +14,10 @@ class Documents:
     def parse(self):
 
         all_content = []
-        with codecs.open(self.path,'r') as lines:
+        with codecs.open(self.path,'r','utf-8-sig') as lines:
 
             for lin in lines:
-                lin = lin.split()
+                lin = lin.strip().split()
 
                 userid,newsid,scan_time,title,create_time = lin[0],lin[1],lin[2],lin[3],lin[-1]
 
