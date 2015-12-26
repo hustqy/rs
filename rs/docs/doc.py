@@ -1,15 +1,13 @@
-
+# -*- coding: utf-8 -*-
 from news import News
 from tfidf import Tfidf
-
 import codecs
+import utility
 class Documents:
-
     def __init__(self, path,is_tfidf=False):
         self.path = path
         self.isTfidf = is_tfidf
         self.AllNews = []
-
 
     def parse(self):
 
@@ -17,10 +15,11 @@ class Documents:
         with codecs.open(self.path,'r','utf-8-sig') as lines:
 
             for lin in lines:
-                lin = lin.strip().split()
-
-                userid,newsid,scan_time,title,create_time = lin[0],lin[1],lin[2],lin[3],lin[-1]
-
+                create_time = utility.split_data_by_date(lin)
+                lin = lin.strip().split()    
+                
+                userid,newsid,scan_time,title,create_time_ = lin[0],lin[1],lin[2],lin[3],lin[-1]
+            
 
                 news = News(int(userid), int(newsid), title, scan_time, [], create_time)
 
@@ -35,7 +34,6 @@ class Documents:
 
             for index in xrange(len(tags)):
                 self.AllNews[index].tags = tags[index]
-
 
     def get_user_item_matrix(self):
         m = dict()
@@ -53,7 +51,6 @@ class Documents:
 
     def get_all_info(self):
         return self.AllNews
-
 
 
 
