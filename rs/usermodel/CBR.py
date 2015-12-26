@@ -4,6 +4,7 @@ class CBR:
     def __init__(self):
         pass
         self.user_vector = dict()
+    #user a list of news to build user profile
     def __init__(self, news):
         self.news = news
         self.user_vector = dict()# userid:set of items
@@ -45,7 +46,7 @@ class CBR:
         for i,j in self.user_vector.items():
             print 'key: ',i,'value len: ',len(j)
 
-    def compare_user_item_similarity(self,user_id,item_vector):
+    def compare_user_item_similarity_one(self,user_id,item_vector):
         len_user = -1
         len_item = len(item_vector)
         sim = 0
