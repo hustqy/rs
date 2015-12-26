@@ -1,5 +1,5 @@
 
-from rs.docs.news import News
+#from rs.docs.news import News
 
 
 

@@ -24,3 +24,5 @@ class News:
         return self.title
     def get_create_time(self):
         return self.create_time
+    def print_news(self):
+        print 'userid: ',self.userid,'\t newsid: ', self.newsid,'\t create_time: ',self.create_time
