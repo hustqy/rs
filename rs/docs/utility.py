@@ -5,7 +5,7 @@ def split_data_by_date(line):
 		temp = temp[-1]
 #                print 'temp: ',temp
 #                temp = '2014年03月08日12:31'
-                print temp
+#                print temp
                 assert(len(temp) > 5)
 		year, temp = temp.split('年')
 		month, temp = temp.split('月')
