@@ -30,16 +30,22 @@ for i in range(10):
 def test_cbr():
     global x
     news = x.get_all_info()
-    news[1].print_news()
+    #news[1].print_news()
     cbr = CBR.CBR(news)
     cbr.build_user_vector()
-    cbr.print_user_vector()
-    #print cbr.compare_user_item_similarity(5218791,news[1].get_tags())
+    cbr.print_user_vector_len()
+    print cbr.compare_user_item_similarity(5218791,news[1].get_tags())
 
-test_cbr()
+#test_cbr()
+def test_sort():
+    show_news_create_time()
+    global x
+    local_news = x.get_all_info()
+    news = Documents.sort_news_by_time(local_news);
+    print '____________________________________________________'
+    for i in news:
+        print i.get_create_time()#do not new.get here
 
-
-
-
+test_sort()
 
 

@@ -42,14 +42,47 @@ class Documents:
         return m
 
     def get_all_info(self):
-        return self.AllNews
-
+        return self.AllNews    
+    @staticmethod
     def sort_news_by_time(in_news_list):
         assert(len(in_news_list) >= 1)
-        in_news_list.sort(key = f)
-    def f(in_news):
-        print in_news.get_create_time()
-        return -1
+        return sorted(in_news_list,cmp = Documents.f)
+    @staticmethod    
+    def f(in_news1,in_news2):
+        t1 = in_news1.get_create_time()
+        t2 = in_news2.get_create_time()
+        assert(len(t1) == len(t2))
+        assert(len(t1[3]) == len(t2[3]))
+        if t1[0] > t2[0]:
+            return 1
+        elif t1[0] < t2[0]:
+            return -1
+        else:#in the same year
+            if t1[1] > t2[1]:
+                return 1
+            elif t1[1] < t2[1]:
+                return -1
+            else:#in the same month
+                if t1[2] > t2[2]:
+                    return 1
+                elif t1[2] < t2[2]:
+                    return -1
+                else:#in the same day
+                    if t1[3][0] > t2[3][0]:
+                        return 1
+                    elif t1[3][0] < t2[3][0]:
+                        return -1
+                    else:#in the same hour
+                        if t1[3][1] > t2[3][1]:
+                            return 1
+                        elif t1[3][1] < t2[3][1]:
+                            return -1
+                        else:
+                            return 0
+
+
+
+        
 
 
 
