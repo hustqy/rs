@@ -18,3 +18,18 @@ def split_data_by_date(line):
 			day = temp[0]
 			time = (-1,-1)
 	        return	(int(year),int(month),int(day),time)
+
+#remove NULL in the data file.
+def remove_null(infile):
+    import os
+    x = open(infile,'r')
+    y = open('temp','a')
+    count = 0
+    for line in x:
+        count += 1
+        if 'NULL' in line:#not in x, or the loop will end
+            pass
+        else:
+            y.write(line)
+    os.remove(infile)
+    os.rename('temp',infile)
