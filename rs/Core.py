@@ -23,7 +23,7 @@ class Core:
         if self.type == 1:
             pass
         if self.type == 2:
-            news = Documents(self.path, is_tfidf=False, is_svd=True)
+            news = Documents(self.path, is_tfidf=False, type=2)
             svd_matrix = news.get_svd_matrix()
             new_userid = news.user_dict[int(self.user)]
             item_obj = ItemModel(svd_matrix,new_userid)
