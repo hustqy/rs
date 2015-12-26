@@ -3,9 +3,10 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 sys.path.append('./..')
+
 from doc import Documents
 from usermodel import CBR
-x = Documents('./user_click_data.txt',True)
+x = Documents('./user_click_data_sorted.txt',True)
 x.parse()
 
 def show_news_create_time():
