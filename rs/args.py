@@ -17,7 +17,8 @@ class Args:
             exit(-1)
         parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,description="""recommender system
 """)
-        parser.add_argument("-f", "--filename", metavar='<filename>', type=str, help="please specify the data file")
+        parser.add_argument("-train", "--trainfile", metavar='<trainfile>', type=str, help="please specify the train data file")
+        parser.add_argument("-test", "--testfile", metavar='<testfile>', type=str, help="please specify the text data file")
         parser.add_argument("-m", "--method", metavar='<method>', type=int, choices=xrange(0,3),help="""please specify method to recommend:
 
 0 for user2user;1 for term2term;2 for others""")

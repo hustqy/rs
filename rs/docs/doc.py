@@ -65,13 +65,13 @@ class Documents:
                 news = News(int(userid), int(newsid), title, scan_time, [], create_time)
                 self.AllNews.append(news)
 
-                #fill user_dict and item_dict
-
-                if userid not in self.user_dict:
-                    self.user_dict[userid] = len(self.user_dict)
-
-                if newsid not in self.item_dict:
-                    self.item_dict[newsid] = len(self.item_dict)
+                # #fill user_dict and item_dict
+                #
+                # if userid not in self.user_dict:
+                #     self.user_dict[userid] = len(self.user_dict)
+                #
+                # if newsid not in self.item_dict:
+                #     self.item_dict[newsid] = len(self.item_dict)
 
 
 
@@ -138,9 +138,31 @@ class Documents:
 
         return m
 
+    def get_item_user_m(self):
+            m = dict()
+            for item in self.AllNews:
+                userid = item.userid
+                newsid = item.newsid
+                if m.has_key(newsid):   # {newsid : {userid: num, userid2:num2 }}
+                    if m[newsid].has_key(userid):
+                        m[newsid][userid] += 1
+                    else:
+                        m[newsid][userid] = 1
+                else:
+                    m[newsid] = {userid: 1}
+            return m
 
+    def get_users(self):
+        res= []
+        for item in self.AllNews:
+            res.append(item.userid)
 
+        return list(set(res))
 
+    def get_items(self):
+        res= []
+        for item in self.AllNews:
+            res.append(item.newsid)
 
-
+        return list(set(res))
 
