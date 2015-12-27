@@ -1,23 +1,41 @@
 # -*- coding: utf-8 -*-
 from news import News
 from tfidf import Tfidf
+
+import numpy
 import codecs
 import utility
 
+
 class Documents:
-    def __init__(self, path,is_tfidf=False):
+
+    def __init__(self, path,is_tfidf=False, type=0):
+
         self.path = path
         self.isTfidf = is_tfidf
-        self.AllNews = []
 
-    def parse(self):
+        self.AllNews = []
+        self.user_dict = {}
+        self.item_dict = {}
+
+        if type==0:
+            self.parse_cbr()
+        if type==1:
+            self.parse_user()
+        if type==2:
+            self.parse_item()
+
+
+    def parse_cbr(self):
         all_content = []
+
         with codecs.open(self.path,'r','utf-8-sig') as lines:
             for lin in lines:
-                create_time = utility.split_data_by_date(lin)
+
+                # create_time = utility.split_data_by_date(lin)
                 lin = lin.strip().split()    
-                userid,newsid,scan_time,title,create_time_ = lin[0],lin[1],lin[2],lin[3],lin[-1]
-                news = News(int(userid), int(newsid), title, scan_time, [], create_time)
+                userid,newsid,scan_time,title,create_time_ = int(lin[0]),int(lin[1]),lin[2],lin[3],lin[-1]
+                news = News(int(userid), int(newsid), title, scan_time, [], create_time_)
                 self.AllNews.append(news)
                 content = "".join(lin[4:-1])
                 all_content.append(content)
@@ -27,6 +45,35 @@ class Documents:
 
             for index in xrange(len(tags)):
                 self.AllNews[index].tags = tags[index]
+
+    def parse_user(self):
+        with codecs.open(self.path,'r','utf-8-sig') as lines:
+            for lin in lines:
+
+                    lin = lin.strip().split()
+                    userid,newsid,scan_time,title,create_time = int(lin[0]),int(lin[1]),lin[2],lin[3],lin[-1]
+                    news = News(int(userid), int(newsid), title, scan_time, [], create_time)
+                    self.AllNews.append(news)
+
+    def parse_item(self):
+
+        with codecs.open(self.path,'r','utf-8-sig') as lines:
+            for lin in lines:
+
+                lin = lin.strip().split()
+                userid,newsid,scan_time,title,create_time = int(lin[0]),int(lin[1]),lin[2],lin[3],lin[-1]
+                news = News(int(userid), int(newsid), title, scan_time, [], create_time)
+                self.AllNews.append(news)
+
+                # #fill user_dict and item_dict
+                #
+                # if userid not in self.user_dict:
+                #     self.user_dict[userid] = len(self.user_dict)
+                #
+                # if newsid not in self.item_dict:
+                #     self.item_dict[newsid] = len(self.item_dict)
+
+
 
     def get_user_item_matrix(self):
         m = dict()
@@ -83,11 +130,41 @@ class Documents:
                         else:
                             return 0
 
+    def get_svd_matrix(self):
+        m = numpy.zeros( (len(self.user_dict) , len(self.item_dict)))
 
+        for it in self.AllNews:
+            x= self.user_dict[it.userid]
+            y= self.item_dict[it.newsid]
+            m[x][y] += 1
 
-        
+        return m
 
+    def get_item_user_m(self):
+            m = dict()
+            for item in self.AllNews:
+                userid = item.userid
+                newsid = item.newsid
+                if m.has_key(newsid):   # {newsid : {userid: num, userid2:num2 }}
+                    if m[newsid].has_key(userid):
+                        m[newsid][userid] += 1
+                    else:
+                        m[newsid][userid] = 1
+                else:
+                    m[newsid] = {userid: 1}
+            return m
 
+    def get_users(self):
+        res= []
+        for item in self.AllNews:
+            res.append(item.userid)
 
+        return list(set(res))
 
+    def get_items(self):
+        res= []
+        for item in self.AllNews:
+            res.append(item.newsid)
+
+        return list(set(res))
 
