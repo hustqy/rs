@@ -59,6 +59,37 @@ class CBR:
         else:
             print 'unknow user.....'
             return -1,-1,-1
-        return len_user,len_item,sim    
-    def get_recommendation_list():
-        pass
+        return len_user,len_item,sim
+
+    #compare the similarity based on the transformed data
+    def compare_user_item_similarity_two(self,user_id,item_vector):
+        len_user = -1
+        len_item = len(item_vector)
+        assert(len_item >= 3)
+        sim = 0
+        if user_id in self.user_vector:
+            user_dict = self.user_vector[user_id]
+            len_user = len(user_dict)
+            for item in item_vector:
+                if item in user_dict:
+                    sim += user_dict[item]
+        else:
+            print 'unknown user'
+        return len_user,len_item,sim
+
+    def get_recommendation_list(self,user_id,in_list):
+        news_rate = dict()
+        for news_item in in_list:
+            nid = news_item.get_newsid()
+            ntag = news_item.get_tags()
+            a,b,c = self.compare_user_item_similarity_two(user_id,ntag)
+            if nid in news_rate:
+                pass
+            else:
+                news_rate[nid] = c
+        news_list = []
+        for key,value in news_rate.items():
+            news_list.append((key,value))
+        news_list.sort(key = lambda x:x[1],reverse = True)
+        return news_list[1:10]
+
