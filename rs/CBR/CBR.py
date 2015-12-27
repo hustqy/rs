@@ -10,13 +10,23 @@ class CBR:
         self.user_vector = dict()# userid:set of items
     
     #build a dict in such a form: key = userid, value = [item1, item2, item3]
-    def build_user_vector(self):
+    def build_user_vector(self,build_vector = []):
+        print 'start building user vector .........'
         assert(len(self.news) != 0)
            #we traverse the news list to build user vectors. one user per vector
+        count_line = 0
+        count_continue =0
         for line in self.news:
+            count_line += 1
             id = line.get_userid()
+            if not id in build_vector:
+                count_continue += 1
+                #print id, build_vector
+                continue
             tags = line.get_tags()#that is the vector for each news
-            assert(len(tags)>=1)
+            #assert(len(tags)>=1)
+            if (len(tags)!= 5):
+                continue
             if id in self.user_vector:
                 for item in tags:
                     self.user_vector[id].append(item)
@@ -24,10 +34,13 @@ class CBR:
                 self.user_vector[id] = list()
                 for item in tags:
                     self.user_vector[id].append(item)
+        assert(count_line < 100000)
+        print 'count_continue: ',count_continue
         self.transform_user_vector()
 
     #transform the uservector so the it has such form: key = userid, value={items1:count,item2:count....}
     def transform_user_vector(self):
+        print 'start transforming user vector........'
         assert(len(self.user_vector)!=0)
         for key,value in self.user_vector.items():
             temp = dict()

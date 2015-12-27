@@ -24,18 +24,23 @@ for i in range(10):
     print 'parse: ',x.get_all_info()[i].get_tags()
 
 '''
+
 def test_cbr():
     #use training data to build user vector
-    training = Documents('user_click_data.txt',True)
-    train_news = training.get_AllNews()
-    cbr = CBR(train_news)
-    cbr.build_user_vector()
-    cbr.transform_user_vector()
-    
     testing = Documents('user_click_data.txt',True)
     test_news = testing.get_AllNews()
     user_read_dict = dict()
     target_reader = []
+    for i in range(5):
+        target_reader.append(test_news[i].get_userid())
+
+    training = Documents('user_click_data.txt',True)
+    train_news = training.get_AllNews()
+    cbr = CBR(train_news)
+    cbr.build_user_vector(target_reader)
+    cbr.transform_user_vector()
+    
+
 
     for i in test_news:
         uid = i.get_userid()
@@ -52,8 +57,17 @@ def test_cbr():
 
     for i in range(5):
         recommend = cbr.get_recommendation_list(target_reader[i],test_news)
-        print 'recommend: ',recommend
-        print 'real: ',user_read_dict[target_reader[i]]
+        #print 'recommend: ',recommend
+        #print 'real: ',user_read_dict[target_reader[i]]
+        temp = []
+        for item in recommend:
+            temp.append(item[0])
+        count = 1
+        for t in user_read_dict[target_reader[i]]:
+            if t in temp:
+                count += 1
+        print 'reader ',target_reader[i],'  read:',len(user_read_dict[target_reader[i]]),'  accept: ',count
+
 
     #print cbr.compare_user_item_similarity_two(5218791,test_news[1].get_tags())
 
