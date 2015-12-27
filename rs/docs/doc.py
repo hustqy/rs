@@ -3,6 +3,7 @@ from news import News
 from tfidf import Tfidf
 import codecs
 import utility
+
 class Documents:
     def __init__(self, path,is_tfidf=False):
         self.path = path
@@ -40,13 +41,15 @@ class Documents:
             else:
                 m[userid] = {newsid: 1}
         return m
-
     def get_all_info(self):
-        return self.AllNews    
+        return self.AllNews
+
+    #Accpet a list of news and return a new list of new sorted by time order.
     @staticmethod
     def sort_news_by_time(in_news_list):
         assert(len(in_news_list) >= 1)
         return sorted(in_news_list,cmp = Documents.f)
+
     @staticmethod    
     def f(in_news1,in_news2):
         t1 = in_news1.get_create_time()
