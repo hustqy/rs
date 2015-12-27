@@ -5,7 +5,10 @@ from tfidf import Tfidf
 import numpy
 import codecs
 import utility
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+sys.path.append('./..')
 
 class Documents:
 
@@ -41,7 +44,6 @@ class Documents:
             tags = Tfidf(all_content).derive_keyword_zh(keyword_num=5)
             for index in xrange(len(tags)):
                 self.AllNews[index].tags = tags[index]
-        return self.AllNews
 
 
     def parse_user(self):
@@ -163,6 +165,7 @@ class Documents:
         res= []
         for item in self.AllNews:
             res.append(item.newsid)
-
         return list(set(res))
+    def get_AllNews(self):
+        return self.AllNews
 
