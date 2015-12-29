@@ -74,6 +74,7 @@ class CBR:
             return -1,-1,-1
         return len_user,len_item,sim
 
+
     #compare the similarity based on the transformed data
     def compare_user_item_similarity_two(self,user_id,item_vector):
         len_user = -1
@@ -104,5 +105,7 @@ class CBR:
         for key,value in news_rate.items():
             news_list.append((key,value))
         news_list.sort(key = lambda x:x[1],reverse = True)
-        return news_list[1:10]
-
+        if len(news_list) < 10:
+            return news_list[0:len(news_list)]
+        else:
+            return news_list[0:10]
