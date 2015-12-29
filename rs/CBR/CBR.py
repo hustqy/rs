@@ -78,7 +78,7 @@ class CBR:
     def compare_user_item_similarity_two(self,user_id,item_vector):
         len_user = -1
         len_item = len(item_vector)
-        assert(len_item >= 3)
+        #assert(len_item >= 3)
         sim = 0
         if user_id in self.user_vector:
             user_dict = self.user_vector[user_id]

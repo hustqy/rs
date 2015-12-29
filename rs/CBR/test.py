@@ -25,16 +25,16 @@ for i in range(10):
 
 '''
 
-def test_cbr():
+def test_cbr(test,train):
     #use training data to build user vector
-    testing = Documents('user_click_data.txt',True)
+    testing = Documents(test,True)
     test_news = testing.get_AllNews()
     user_read_dict = dict()
     target_reader = []
     for i in range(5):
         target_reader.append(test_news[i].get_userid())
 
-    training = Documents('user_click_data.txt',True)
+    training = Documents(train,True)
     train_news = training.get_AllNews()
     cbr = CBR(train_news)
     cbr.build_user_vector(target_reader)
@@ -80,6 +80,7 @@ def test_sort():
     for i in news:
         print i.get_create_time()#do not new.get here
 
-test_cbr()
+if __name__ == "__main__":
+    test_cbr('/Users/qiaoyang/PycharmProjects/testing.txt','/Users/qiaoyang/PycharmProjects/training.txt' )
 
 
