@@ -12,7 +12,7 @@ class CBR:
     #build a dict in such a form: key = userid, value = [item1, item2, item3]
     def build_user_vector(self,build_vector = []):
         print 'start building user vector .........'
-        assert(len(self.news) != 0)
+        # assert(len(self.news) != 0)
            #we traverse the news list to build user vectors. one user per vector
         count_line = 0
         count_continue =0
@@ -34,14 +34,14 @@ class CBR:
                 self.user_vector[id] = list()
                 for item in tags:
                     self.user_vector[id].append(item)
-        assert(count_line < 100000)
+        # assert(count_line < 100000)
         print 'count_continue: ',count_continue
         self.transform_user_vector()
 
     #transform the uservector so the it has such form: key = userid, value={items1:count,item2:count....}
     def transform_user_vector(self):
         print 'start transforming user vector........'
-        assert(len(self.user_vector)!=0)
+        # assert(len(self.user_vector)!=0)
         for key,value in self.user_vector.items():
             temp = dict()
             for item in value:
@@ -79,7 +79,7 @@ class CBR:
     def compare_user_item_similarity_two(self,user_id,item_vector):
         len_user = -1
         len_item = len(item_vector)
-        assert(len_item >= 3)
+        #assert(len_item >= 3)
         sim = 0
         if user_id in self.user_vector:
             user_dict = self.user_vector[user_id]

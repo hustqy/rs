@@ -17,7 +17,7 @@ def test_encoding():
     s='2014年03月08日12:31'
     print s.split('年')
 '''
-for i in range(10):    
+for i in range(10):
     print 'parse: ',x.get_all_info()[i].get_userid()
     print 'parse: ',x.get_all_info()[i].get_newsid()
     print 'parse: ',x.get_all_info()[i].get_title()
@@ -76,7 +76,7 @@ def test_cbr(target_reader_list = []):
         temp = []
         for item in recommend:
             temp.append(item[0])
-        
+
         count_read = 0
         count = 0
         for t in user_read_dict[target_reader[i]]:
@@ -84,7 +84,7 @@ def test_cbr(target_reader_list = []):
             if t in temp:
                 count += 1
         print 'reader ',target_reader[i],'  read:',len(user_read_dict[target_reader[i]]),'  accept: ',count
-        
+
 
 def test_sort():
     show_news_create_time()
