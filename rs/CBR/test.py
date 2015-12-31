@@ -42,6 +42,9 @@ def test_cbr(target_reader_list = []):
         get += 1
         if not utemp in target_reader:
             target_reader.append(utemp)
+
+    if input_target_len != 0:
+        target_reader = target_reader_list
     training = Documents('user_click_data.txt',True)
     train_news = training.get_AllNews()
     cbr = CBR(train_news)
@@ -92,6 +95,6 @@ def test_sort():
     for i in news:
         print i.get_create_time()#do not new.get here
 
-test_cbr()
+test_cbr([5218791,52550])
 
 
