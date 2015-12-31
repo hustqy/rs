@@ -21,7 +21,43 @@ class Core:
             UserModel(m)
             self.print_matrix(m)
         if self.type == 1:
-            pass
+
+            results=dict()
+            news = Documents(self.train_path, is_tfidf=False,type=1)
+            m = news.get_user_item_matrix()
+           # item_news_m = news.get_item_user_m() #item_news_m[newsid] represents users who saw newsid
+            item_news_m = news.get_item_user_m()
+
+            test = Documents(self.test_path, is_tfidf=False, type=1)
+            test_user_item = test.get_user_item_matrix()
+            recom_items = test.get_items()
+
+            if self.user:
+                users = [self.user]
+            else:
+                users = self.get_sample_users(m,30)
+
+            for i_user in users:
+                if i_user not in test_user_item:
+                    continue
+                test_user_seen = test_user_item[i_user].keys()
+                for it in recom_items:
+                    seen_items = m[self.user].keys()
+                    if it in seen_items:
+                        seen_items.remove(it)
+                    rating=0
+                    user_id=item_news_m[it].keys()
+                    for id in user_id:
+                        count=self.user_sim(m[id].keys(),seen_items)
+                        similarity=count/math.sqrt(len(m[id].keys())*len(m[self.user].keys()))
+                        rating+=m[id][it]*similarity
+                    results[it]=rating
+                res = sorted(results.items(),key = lambda k:k[1],reverse=True)[0:10]
+                predict_seen = [it[0] for it in res]
+                # for (key,val) in res:
+                #     print "item %d rating is %f" % (key, val)
+                acc,hit_items = self.cal_accuracy(test_user_seen,predict_seen)
+                print "%d %f "% (i_user,acc),hit_items
         if self.type == 2:
 
             news = Documents(self.train_path, is_tfidf=False, type=2)
@@ -32,7 +68,10 @@ class Core:
             test_user_item = test.get_user_item_matrix()
             recom_items = test.get_items()
 
-            users = self.get_sample_users(user_item_m,100)
+            if self.user:
+                users = [self.user]
+            else:
+                users = self.get_sample_users(user_item_m,30)
             for i_user in users:
                 if i_user not in test_user_item:
                     continue
@@ -91,6 +130,14 @@ class Core:
             if users[i] in users2:
                 array2[i] = 1
         return self.cosSim(mat(array1), mat(array2))
+
+    @staticmethod
+    def user_sim(inA,inB):
+        count=0
+        for i in inA:
+            if i in inB:
+                count+=1
+        return count
 
     @staticmethod
     def cosSim(inA,inB):
