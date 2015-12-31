@@ -2,7 +2,7 @@
 #新闻推荐系统
 
 支持三种推荐模型:<br>
-0.content-based recommendation
+0.content-based recommendation <br>
 1.user2user 模型<br>
 2.item2item模型<br>
 
