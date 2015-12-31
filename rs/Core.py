@@ -2,24 +2,32 @@ from numpy import *
 from docs import Documents
 from numpy import linalg as la
 from usermodel import UserModel
-
+from CBR import CBR
+import sys
+sys.path.append('./CBR/')
+import start_cbr
 from itemmodel import ItemModel
 class Core:
 
-    def __init__(self,args):
+    def __init__(self,args=0):
 
         self.train_path = args.trainfile
         self.test_path = args.testfile
         self.type = args.method
         self.user = args.userid
+        
 
     def recommend(self):
-
         if self.type == 0:
-            news = Documents(self.train_path, is_tfidf=False)
-            m = news.get_user_item_matrix()
-            UserModel(m)
-            self.print_matrix(m)
+            mtrain_path = '/root/git/python/rs_system/rs/rs/CBR/user_click_data.txt'
+            mtest_path = '/root/git/python/rs_system/rs/rs/CBR/user_click_data.txt'
+            mtrain_path = self.train_path
+            mtest_path = self.test_path
+            if self.user:
+                start_cbr.test_cbr([self.user],mtrain_path,mtest_path)
+            else:
+                start_cbr.test_cbr([],mtrain_path,mtest_path)
+
         if self.type == 1:
 
             results=dict()
@@ -154,3 +162,11 @@ class Core:
                 count +=1
                 res.append(i)
         return 1.0*count/len(mark),res
+
+if __name__ == '__main__':
+    c = Core()
+    c.recommend()
+
+
+
+
